@@ -11,6 +11,7 @@
 CRGB leds[NUM_LEDS];
 
 int index;
+int index2;
 int count;
 int color;
 int brightness;
@@ -68,6 +69,17 @@ void flare() {
     leds[index]+=CHSV(color,255,55);
 }
 
+void flare_compliments() {
+    if(count%20==0) {
+        index = random(NUM_LEDS);
+        index2 = random(NUM_LEDS);
+        if (index2 == index) index2 = (index2+NUM_LEDS/2)%NUM_LEDS;
+        color = random8();
+    }
+    leds[index]+=CHSV(color,255,55);
+    leds[index2]+=CHSV((color+128)%255,255,55);
+}
+
 void warm() {
     int which = random(NUM_LEDS);
     leds[which] += CHSV(255,255,255);
@@ -77,7 +89,7 @@ void loop() {
     int val = analogRead(BRIGHTNESS_PIN);
     //Serial.println(val);
     //blackout();
-    flare();
+    flare_compliments();
     fade();
     FastLED.show();
     count++;

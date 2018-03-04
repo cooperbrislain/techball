@@ -49,6 +49,17 @@ void march() {
     leds[count%NUM_LEDS] = CRGB::White;
 }
 
+void strobe() {
+    if(count%2==0) {
+        leds[index] = CRGB::White;
+    } else {
+        leds[index] = CRGB::Black;
+    }
+    if(count%10==0) {
+        index = random(NUM_LEDS);
+    }
+}
+
 void warm() {
     int which = random(NUM_LEDS);
     leds[which] += CHSV(255,255,255);
@@ -58,7 +69,7 @@ void loop() {
     int val = analogRead(BRIGHTNESS_PIN);
     //Serial.println(val);
     blackout();
-    march();
+    strobe();
 
     //fade();
     FastLED.show();

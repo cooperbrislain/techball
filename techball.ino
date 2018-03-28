@@ -38,27 +38,12 @@ void setup() {
     randomSeed(analogRead(A0));
 }
 
-void march() {
-    leds[count%NUM_LEDS] = CRGB::White;
-}
-
-void strobe() {
-    if(count%2==0) {
-        leds[index] = CRGB::White;
-    } else {
-        leds[index] = CRGB::Black;
-    }
-    if(count%10==0) {
-        index = random(NUM_LEDS);
-    }
-}
-
-void flare() {
-    if(count%20==0) {
-        index = random(NUM_LEDS);
-        color = random8();
-    }
-    leds[index]+=CHSV(color,255,55);
+void loop() {
+    flare_compliments();
+    fade();
+    FastLED.show();
+    count++;
+    delay(90);
 }
 
 void flare_compliments() {
@@ -70,17 +55,4 @@ void flare_compliments() {
     }
     leds[index]+=CHSV(color,255,55);
     leds[index2]+=CHSV((color+128)%255,255,55);
-}
-
-void warm() {
-    int which = random(NUM_LEDS);
-    leds[which] += CHSV(255,255,255);
-}
-
-void loop() {
-    flare_compliments();
-    fade();
-    FastLED.show();
-    count++;
-    delay(90);
 }

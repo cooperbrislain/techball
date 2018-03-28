@@ -1,6 +1,6 @@
 #include "FastLED.h"
 
-#define NUM_LEDS 6
+#define NUM_LEDS 12
 
 #define DATA_PIN 7
 #define BRIGHTNESS_PIN 0
@@ -17,33 +17,25 @@ int color;
 int brightness;
 
 void fade(){
-    for(int i=0; i<NUM_LEDS; i++){ 
+    for(int i=0; i<NUM_LEDS; i++){
          leds[i].fadeToBlackBy( 20 );
     }
 }
 
 void blackout(){
-    for(int i=0; i<NUM_LEDS; i++){ 
+    for(int i=0; i<NUM_LEDS; i++){
          leds[i]=CRGB::Black;
     }
 }
 
-void fade_out_by(int b){
-    if(brightness > 0) {
-        brightness -= b;
-        FastLED.setBrightness(brightness);
-    }
-}
-
 void setup() {
-    Serial.begin(9600);
     FastLED.addLeds<NEOPIXEL, DATA_PIN>(leds, NUM_LEDS);
     for (int i=0; i<NUM_LEDS; i++) {
-        leds[i] = CRGB::Black;  
+        leds[i] = CRGB::Black;
     }
     FastLED.show();
     count=0;
-    randomSeed(analogRead(A0)); 
+    randomSeed(analogRead(A0));
 }
 
 void march() {
@@ -86,12 +78,9 @@ void warm() {
 }
 
 void loop() {
-    int val = analogRead(BRIGHTNESS_PIN);
-    //Serial.println(val);
-    //blackout();
     flare_compliments();
     fade();
     FastLED.show();
     count++;
-    delay(1024-val);
+    delay(90);
 }
